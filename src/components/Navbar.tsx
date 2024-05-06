@@ -1,5 +1,6 @@
+import React from "react"
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
     <>
       <nav className="hidden md:block md:p-0 fixed w-full bg-white border-gray-200 z-[100] shadow-md">

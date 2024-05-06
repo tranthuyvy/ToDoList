@@ -1,4 +1,4 @@
-import Layout from "./components/Layout.jsx";
+import Layout from "./components/Layout";
 import { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 

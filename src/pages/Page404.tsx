@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
+import React from "react"
 
-
-const Page404 = () => {
+const Page404: React.FC = () => {
   const navigate = useNavigate();
   return (
     <>

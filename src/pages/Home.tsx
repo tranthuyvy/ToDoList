@@ -1,19 +1,21 @@
-import { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { fetchUserTodosRequest, fetchUsersRequest } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import sortTodoByCompleted from "../utils/sortTodoByCompleted";
 import TodoItem from "../components/TodoItem";
 import { Combobox, Transition } from "@headlessui/react";
+import Todo from "../types/Todo";
+import User from "../types/User";
 
-const Home = () => {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.users);
-  const [selectedUser, setSelectedUser] = useState("");
-  const userTodos = useSelector((state) => state.userTodos.userTodos);
-  const [userTodo, setUserTodo] = useState(userTodos);
-  const [todosDone, setTodosDone] = useState(0);
+  const users = useSelector((state: any) => state.users.users);
+  const [selectedUser, setSelectedUser] = useState<string>("");
+  const userTodos = useSelector((state: any) => state.userTodos.userTodos);
+  const [userTodo, setUserTodo] = useState<Todo[]>(userTodos);
+  const [todosDone, setTodosDone] = useState<number>(0);
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
     dispatch(fetchUsersRequest());
@@ -29,15 +31,14 @@ const Home = () => {
     }
   }, [userTodos]);
 
-  const handleUserSelect = (selectedItem) => {
+  const handleUserSelect = (selectedItem: any) => {
     if (selectedItem) {
-      console.log("selectedItem", selectedItem);
       setSelectedUser(selectedItem);
       dispatch(fetchUserTodosRequest(selectedItem.id));
     }
   };
 
-  const handleMarkDone = async (todoId) => {
+  const handleMarkDone = async (todoId: number) => {
     setLoading(prev => ({ ...prev, [todoId]: true }));
     try {
       const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
@@ -71,7 +72,7 @@ const Home = () => {
   const filteredUser =
     query === ''
       ? users
-      : users.filter((item) =>
+      : users.filter((item: User) =>
         item.name
           .toLowerCase()
           .replace(/\s+/g, '')
@@ -99,7 +100,7 @@ const Home = () => {
 
               <Combobox.Input
                 className='w-full h-[48px] pl-20 p-4 rounded-l-full max-sm:rounded-full bg-neutral-100 outline-none cursor-pointer text-sm text-main'
-                displayValue={(item) => item.name}
+                displayValue={(item: User) => item.name}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder='Leanne Graham...'
               />
@@ -123,7 +124,7 @@ const Home = () => {
                       Create {query}
                     </Combobox.Option>
                   ) : (
-                    filteredUser.map((item) => (
+                    filteredUser.map((item: User) => (
                       <Combobox.Option
                         key={item.id}
                         className={({ active }) =>
@@ -164,7 +165,7 @@ const Home = () => {
         <div className="h-[500px] overflow-y-auto border border-neutral-300 p-5 rounded-md">
           {selectedUser ? (
             userTodo ? (
-              sortTodoByCompleted(userTodo).map((todo) => (
+              sortTodoByCompleted(userTodo).map((todo: Todo) => (
                 <TodoItem
                   key={todo.id}
                   todo={todo}

@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
+import React from 'react';
+import Icon from '../types/Icon';
 
-const CloseCircleIcon = ({ width, height }) => {
+const CloseCircleIcon: React.FC<Icon> = ({ width, height }) => {
   return (
     <svg width={width} height={height} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -13,11 +14,6 @@ const CloseCircleIcon = ({ width, height }) => {
       </g>
     </svg>
   );
-};
-
-CloseCircleIcon.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CloseCircleIcon;

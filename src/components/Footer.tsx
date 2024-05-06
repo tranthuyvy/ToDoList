@@ -1,7 +1,8 @@
 import { FaFacebookF, FaYoutube } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
+import React from "react";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (

@@ -1,6 +1,6 @@
-import Navbar from "./Navbar.jsx";
+import Navbar from "./Navbar.js";
 import Footer from "./Footer.jsx";
-import Routers from "../routers/Routers.jsx";
+import Routers from "../routers/Routers.js";
 
 const Layout = () => {
   return (

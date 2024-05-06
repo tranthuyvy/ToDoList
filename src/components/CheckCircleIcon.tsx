@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
+import React from 'react';
+import Icon from '../types/Icon';
 
-const CheckCircleIcon = ({ width, height }) => {
+const CheckCircleIcon: React.FC<Icon> = ({ width, height }) => {
   return (
     <svg
       viewBox="64 64 896 896"
@@ -24,11 +25,6 @@ const CheckCircleIcon = ({ width, height }) => {
       />
     </svg>
   );
-};
-
-CheckCircleIcon.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CheckCircleIcon;
