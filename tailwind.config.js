@@ -5,7 +5,18 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        RobotoMedium: ["RobotoMedium"],
+        RobotoSemibold: ["RobotoSemibold"],
+      },
+      colors: {
+        'main': '#33afa6',
+        'red': '#b22830',
+        'green': '#006400',
+        'hoverGreen': '#004500'
+      }
+    },
   },
   plugins: [],
 }

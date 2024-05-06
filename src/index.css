@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "RobotoMedium";
+  src: local("RobotoSerif-Medium"),
+    url('./assets/font/RobotoSerif-Medium.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "RobotoSemiBold";
+  src: local("RobotoSerif-SemiBold"),
+    url('./assets/font/RobotoSerif-SemiBold.ttf') format("truetype");
+}
