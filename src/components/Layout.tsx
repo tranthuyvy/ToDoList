@@ -1,8 +1,9 @@
-import Navbar from "./Navbar.js";
-import Footer from "./Footer.jsx";
-import Routers from "../routers/Routers.js";
+import Navbar from "./Navbar.tsx";
+import Footer from "./Footer.tsx";
+import Routers from "../routers/Routers.tsx";
+import React from "react";
 
-const Layout = () => {
+const Layout: React.FC = () => {
   return (
     <div>
       <Navbar />
