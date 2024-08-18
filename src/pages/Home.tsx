@@ -1,21 +1,21 @@
-import React, { useEffect, useState, Fragment } from "react";
-import { fetchUserTodosRequest, fetchUsersRequest } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import sortTodoByCompleted from "../utils/sortTodoByCompleted";
-import TodoItem from "../components/TodoItem";
-import { Combobox, Transition } from "@headlessui/react";
-import Todo from "../types/Todo";
-import User from "../types/User";
+import React, { useEffect, useState, Fragment } from 'react';
+import { fetchUserTodosRequest, fetchUsersRequest } from '../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import sortTodoByCompleted from '../utils/sortTodoByCompleted';
+import TodoItem from '../components/TodoItem';
+import { Combobox, Transition } from '@headlessui/react';
+import Todo from '../types/Todo';
+import User from '../types/User';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.users.users);
-  const [selectedUser, setSelectedUser] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<string>('');
   const userTodos = useSelector((state: any) => state.userTodos.userTodos);
   const [userTodo, setUserTodo] = useState<Todo[]>(userTodos);
   const [todosDone, setTodosDone] = useState<number>(0);
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>('');
 
   useEffect(() => {
     dispatch(fetchUsersRequest());
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     setUserTodo(userTodos);
     if (userTodos && userTodos.length > 0) {
-      const completedTodos = userTodos.filter(todo => todo.completed);
+      const completedTodos = userTodos.filter((todo) => todo.completed);
       setTodosDone(completedTodos.length);
     } else {
       setTodosDone(0);
@@ -39,33 +39,36 @@ const Home: React.FC = () => {
   };
 
   const handleMarkDone = async (todoId: number) => {
-    setLoading(prev => ({ ...prev, [todoId]: true }));
+    setLoading((prev) => ({ ...prev, [todoId]: true }));
     try {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          completed: true,
-        }),
-      });
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/${todoId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            completed: true,
+          }),
+        }
+      );
       if (response.ok) {
-        const updatedUserTodos = userTodos.map(todo => {
+        const updatedUserTodos = userTodos.map((todo) => {
           if (todo.id === todoId) {
             return { ...todo, completed: true };
           }
           return todo;
         });
         setUserTodo(updatedUserTodos);
-        setTodosDone(prev => prev + 1);
+        setTodosDone((prev) => prev + 1);
       } else {
-        console.error("Failed to mark todo as done");
+        console.error('Failed to mark todo as done');
       }
     } catch (error) {
-      console.error("Error marking todo as done:", error);
+      console.error('Error marking todo as done:', error);
     } finally {
-      setLoading(prev => ({ ...prev, [todoId]: false }));
+      setLoading((prev) => ({ ...prev, [todoId]: false }));
     }
   };
 
@@ -73,53 +76,55 @@ const Home: React.FC = () => {
     query === ''
       ? users
       : users.filter((item: User) =>
-        item.name
-          .toLowerCase()
-          .replace(/\s+/g, '')
-          .includes(query.toLowerCase().replace(/\s+/g, ''))
-      )
+          item.name
+            .toLowerCase()
+            .replace(/\s+/g, '')
+            .includes(query.toLowerCase().replace(/\s+/g, ''))
+        );
 
   return (
     <>
       <div className="pt-[6%] p-5">
         <h1 className="font-RobotoSemibold my-5">User</h1>
-        <div className="">
-        </div>
+        <div className=""></div>
         <div>
-          <Combobox value={selectedUser} onChange={(selectedUser) => handleUserSelect(selectedUser)}>
-            <div className='relative w-full'>
-              <Combobox.Button className='absolute top-[14px]'>
+          <Combobox
+            value={selectedUser}
+            onChange={(selectedUser) => handleUserSelect(selectedUser)}
+          >
+            <div className="relative w-full">
+              <Combobox.Button className="absolute top-[14px]">
                 <img
-                  src='https://statics.cdn.200lab.io/f/20230830172851/200lab-logo-beta.png'
+                  src="https://statics.cdn.200lab.io/f/20230830172851/200lab-logo-beta.png"
                   width={50}
                   height={50}
-                  className='ml-4 mt-1.5'
-                  alt='200lab logo'
+                  className="ml-4 mt-1.5"
+                  alt="200lab logo"
                 />
               </Combobox.Button>
 
               <Combobox.Input
-                className='w-full h-[48px] pl-20 p-4 rounded-l-full max-sm:rounded-full bg-neutral-100 outline-none cursor-pointer text-sm text-main'
+                className="w-full h-[48px] pl-20 p-4 rounded-l-full max-sm:rounded-full bg-neutral-100 outline-none cursor-pointer text-sm text-main"
                 displayValue={(item: User) => item.name}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder='Leanne Graham...'
+                placeholder="Leanne Graham..."
               />
 
               <Transition
                 as={Fragment}
-                leave='transition ease-in duration-100'
-                leaveFrom='opacity-100'
-                leaveTo='opacity-0'
-                afterLeave={() => setQuery("")}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+                afterLeave={() => setQuery('')}
               >
                 <Combobox.Options
-                  className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
+                  className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                   static
                 >
-                  {filteredUser.length === 0 && query !== "" ? (
+                  {filteredUser.length === 0 && query !== '' ? (
                     <Combobox.Option
                       value={query}
-                      className='cursor-default select-none py-2 pl-10 pr-4'
+                      className="cursor-default select-none py-2 pl-10 pr-4"
                     >
                       Create {query}
                     </Combobox.Option>
@@ -128,22 +133,28 @@ const Home: React.FC = () => {
                       <Combobox.Option
                         key={item.id}
                         className={({ active }) =>
-                          `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-main text-white" : "text-gray-900"
+                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            active ? 'bg-main text-white' : 'text-gray-900'
                           }`
                         }
                         value={item}
                       >
                         {({ selected, active }) => (
                           <>
-                            <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
+                            <span
+                              className={`block truncate ${
+                                selected ? 'font-medium' : 'font-normal'
+                              }`}
+                            >
                               {item.name}
                             </span>
 
                             {selected ? (
-                              <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-white" : "text-teal-600"}`}
-                              >
-
-                              </span>
+                              <span
+                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                  active ? 'text-white' : 'text-teal-600'
+                                }`}
+                              ></span>
                             ) : null}
                           </>
                         )}
@@ -151,9 +162,7 @@ const Home: React.FC = () => {
                     ))
                   )}
                   Create {query}
-
                 </Combobox.Options>
-
               </Transition>
             </div>
           </Combobox>
@@ -161,7 +170,14 @@ const Home: React.FC = () => {
       </div>
 
       <div className="p-5">
-        <h1 className="font-RobotoSemibold mb-5">Tasks</h1>
+        <div className="flex">
+          <h1 className="font-RobotoSemibold mb-5 flex-1">Tasks</h1>
+          <button className="flex justify-end items-center mb-5">
+            <div className="hover:text-white text-green cursor-pointer font-semibold w-[100px] h-[40px] border border-green hover:bg-hoverGreen rounded-[10px] flex justify-center items-center shadow-md">
+              Create
+            </div>
+          </button>
+        </div>
         <div className="h-[500px] overflow-y-auto border border-neutral-300 p-5 rounded-md">
           {selectedUser ? (
             userTodo ? (
@@ -177,17 +193,20 @@ const Home: React.FC = () => {
               <p className="font-RobotoMedium">No tasks</p>
             )
           ) : (
-            <p className="font-RobotoMedium text-center opacity-40">Select a user to view tasks</p>
+            <p className="font-RobotoMedium text-center opacity-40">
+              Select a user to view tasks
+            </p>
           )}
-
         </div>
       </div>
 
       <div className="py-2 px-5">
-        <p className="font-RobotoSemibold">Done: {todosDone} / {userTodos.length} tasks</p>
+        <p className="font-RobotoSemibold">
+          Done: {todosDone} / {userTodos.length} tasks
+        </p>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
